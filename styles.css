@@ -1,0 +1,15 @@
+body h2 {
+    padding: 10px;
+    font-family: "Schoolbell", serif;
+  font-weight: 400;
+  font-style: normal;
+}
+body h1 { 
+    font-family: "Rubik Iso", serif;
+  font-weight: 400;
+  font-style: normal;
+  padding-bottom: 20px;
+}
+body{
+    background-color: rgb(207, 203, 131);
+}
