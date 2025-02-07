@@ -18,8 +18,36 @@ a {
   color: black;
 }
 .btn-custom{
-  font-size: larger;
-  padding: 20px 40px;
+  font-family: "Rubik Iso", serif;
+  font-weight: 400;
+  font-size: x-large;
+  padding: 40px 50px;
   border-radius: 10px;
-  margin: 15px;
+  margin: 25px;
+}
+img.rock{
+  width: 400px;
+}
+.btn-endme{
+  font-family: "Rubik Iso", serif;
+  font-weight: 400;
+  font: large;
+  margin-top: 40px;
+  padding: 20px 15px;
+  background-color: rgb(46, 11, 159);
+}
+p{
+  padding: 10px;
+  font-family: "Schoolbell", serif;
+font-weight: 400;
+font-size: larger;
+}
+#winningGif {
+  display: none; /* Hide it initially */
+  position: fixed; /* Fix position */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* Center it */
+  width: 300px; 
+  z-index: 1000; /* Ensure it appears above everything */
 }
