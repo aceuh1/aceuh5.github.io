@@ -75,16 +75,15 @@
 <body>
   <div class="container text-center mt-5">
     <h1>Round in Progress</h1>
-    <h2>Round <span id="currentRound"></span> of 10</h2>
+    <h2>Round <span id="currentRound"></span> </h2>
     <div class="mb-4">
       <p>Play Rock-Paper-Scissors to determine who starts first!</p>
-       <img src="https://www.google.com/imgres?q=8%20bit%20rock%20paper%20sicors&imgurl=https%3A%2F%2Fst2.depositphotos.com%2F1340907%2F8260%2Fv%2F950%2Fdepositphotos_82602614-stock-illustration-rock-paper-scissors.jpg&imgrefurl=https%3A%2F%2Fdepositphotos.com%2Fvector%2Frock-paper-scissors-82602614.html&docid=TUTncykrrIcumM&tbnid=Ouelyl_s6hEr0M&vet=12ahUKEwiZvdujpbGLAxViODQIHU67EfwQM3oECBwQAA..i&w=1023&h=625&hcb=2&ved=2ahUKEwiZvdujpbGLAxViODQIHU67EfwQM3oECBwQAA" alt="rock paper peace"> </img>
       <button class="btn btn-primary btn-custom" id="startGame">Start Game</button>
     </div>
     <div class="mb-4">
       <h2>Tap once after each round</h2>
-      <button class="btn btn-success btn-custom" onclick="document.getElementById('track4').play()">I Won</button>
-      <button class="btn btn-danger btn-custom" onclick="document.getElementById('track5').play()">I Lost</button>
+      <button id="winButton" class="btn btn-success btn-custom" onclick="document.getElementById('track4').play()">I Won</button>
+      <button id="loseButton" class="btn btn-danger btn-custom" onclick="document.getElementById('track5').play()">I Lost</button>
     </div>
   </div>
 
@@ -108,8 +107,20 @@
   </audio>
 
   <script>
-    const currentRound = localStorage.getItem('currentRound') || 1;
-    document.getElementById('currentRound').textContent = currentRound;
+    // Retrieve the current round from localStorage or default to 1
+    let currentRound = parseInt(localStorage.getItem("currentRound")) || 1;
+    document.getElementById("currentRound").textContent = currentRound;
+  
+    function incrementRound() {
+      currentRound++; // Increase round number
+      localStorage.setItem("currentRound", currentRound); // Save new value
+      document.getElementById("currentRound").textContent = currentRound; // Update display
+    }
+  
+    // Attach event listeners to buttons
+    document.getElementById("winButton").addEventListener("click", incrementRound);
+    document.getElementById("loseButton").addEventListener("click", incrementRound);
   </script>
+  
 </body>
 </html>
