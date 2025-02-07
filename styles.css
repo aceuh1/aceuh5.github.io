@@ -13,3 +13,13 @@ body h1 {
 body{
     background-color: rgb(207, 203, 131);
 }
+a {
+  text-decoration: underline;
+  color: black;
+}
+.btn-custom{
+  font-size: larger;
+  padding: 20px 40px;
+  border-radius: 10px;
+  margin: 15px;
+}
