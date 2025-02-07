@@ -5,10 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>5 10 Game - Round</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Rubik+Iso&family=Schoolbell&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
+
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
-    import { getDatabase, ref, set, onValue } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js";
+    import { getDatabase, ref, set, onValue, get } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js";
+
 
     const firebaseConfig = {
   apiKey: "AIzaSyDyFEEoPZh7DcbFPIy9yXcM_DhoCmRnfFs",
@@ -22,6 +27,14 @@
 
     const app = initializeApp(firebaseConfig);
     const db = getDatabase(app);
+
+
+    window.db = db;
+  window.ref = ref;
+  window.set = set;
+  window.get = get;
+
+
     const startGameRef = ref(db, 'game/startGameClicked');
 
     document.addEventListener("DOMContentLoaded", () => {
@@ -60,30 +73,47 @@
       track2.play();
 
       track1.onended = () => {
-        track3.play();
-      };
+  track3.play();
+};
 
-      track3.onended = () => {
-        track6.play();
-        track6.onended = () => {
-          window.location.href = 'scoreboard.html'; // Redirect after last track
-        };
-      };
+track3.onended = () => {
+  track6.play();
+  
+  track6.onended = () => {
+    track7.play(); // Play track7 after track6 ends
+
+    track7.onended = () => {
+      window.location.href = 'scoreboard.html'; // Redirect after track7 ends
+    };
+  };
+};
     }
+
   </script>
 </head>
 <body>
   <div class="container text-center mt-5">
-    <h1>Round in Progress</h1>
+    <h1  class="mb-4">Find an Opponent Quick!</h1> 
+    <h1 class="mb-4"> <button class="btn btn-primary btn-custom" id="startGame">Start Game</button></h1>
     <h2>Round <span id="currentRound"></span> </h2>
     <div class="mb-4">
-      <p>Play Rock-Paper-Scissors to determine who starts first!</p>
-      <button class="btn btn-primary btn-custom" id="startGame">Start Game</button>
+      <p class="mt-3">Play <strong>Rock-Paper-Scissors</strong> to determine who starts first!</p>
+     <img class="rock" src="data:image/jpeg;base64,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" alt="oops"> 
+
+
+     
     </div>
     <div class="mb-4">
-      <h2>Tap once after each round</h2>
+      <h2 class="mb-4">Tap once after each round of 5-10</h2> 
+      <img id="winningGif" src="https://media.tenor.com/pPYpISB14vwAAAAM/coin.gif" alt=" YOU WON!" >
       <button id="winButton" class="btn btn-success btn-custom" onclick="document.getElementById('track4').play()">I Won</button>
+     
       <button id="loseButton" class="btn btn-danger btn-custom" onclick="document.getElementById('track5').play()">I Lost</button>
+
+      <br><br><p class="mt-3">______________________________________________</p>
+      <p class="mt-3"> Tap <strong> only once </strong>before the games over or you get <strong>no points! </strong></p>
+      
+      <button id="gameOverButton" class="btn btn-danger btn-endme">Game Over</button>
     </div>
   </div>
 
@@ -105,22 +135,95 @@
   <audio id="track6">
     <source src="https://raw.githubusercontent.com/aceuh1/aceuh5.github.io/main/Mario%20Kart%20(Race%20End)%20-%20Sound%20Effect%20(HD)(MP3_160K).mp3.mp3" type="audio/mpeg">
   </audio>
+  <audio id="track7">
+    <source src="https://raw.githubusercontent.com/aceuh1/aceuh5.github.io/main/Super%20Mario%20Bros.%20Music%20-%20Level%20Complete.mp3" type="audio/mpeg">
+  </audio>
+  
+
 
   <script>
-    // Retrieve the current round from localStorage or default to 1
-    let currentRound = parseInt(localStorage.getItem("currentRound")) || 1;
-    document.getElementById("currentRound").textContent = currentRound;
+   // Reset wins and currentRound on page load so every game starts fresh
+localStorage.setItem("wins", 0);
+localStorage.setItem("currentRound", 1);
+
+let currentRound = 1;
+let wins = 0; // This variable tracks wins in memory during the session
+
+// (Optional) Update the displayed round and wins if you want to see them on-screen
+document.getElementById("currentRound").textContent = currentRound;
+// document.getElementById("wins").textContent = wins; // Uncomment if you have a wins display
+
+function incrementRound() {
+  currentRound++; // Increase round number
+  localStorage.setItem("currentRound", currentRound); // Save new value to local storage
+  document.getElementById("currentRound").textContent = currentRound; // Update the round display
+}
+
+function incrementWins() {
+  wins++; // Increase the in-memory win count
+  localStorage.setItem("wins", wins); // Save the updated wins count in local storage
+  // No live update of the wins display is needed unless you choose to
+}
+
+// Attach event listeners to the round buttons
+document.getElementById("winButton").addEventListener("click", function() {
+  incrementRound();
+  incrementWins();
+});
+document.getElementById("loseButton").addEventListener("click", incrementRound);
+
+document.getElementById("winButton").addEventListener("click", function() {
   
-    function incrementRound() {
-      currentRound++; // Increase round number
-      localStorage.setItem("currentRound", currentRound); // Save new value
-      document.getElementById("currentRound").textContent = currentRound; // Update display
-    }
-  
-    // Attach event listeners to buttons
-    document.getElementById("winButton").addEventListener("click", incrementRound);
-    document.getElementById("loseButton").addEventListener("click", incrementRound);
-  </script>
-  
+    // Show the GIF
+    const gifElement = document.getElementById("winningGif");
+    gifElement.style.display = "block"; // Show the GIF
+
+    // Optionally hide the GIF after a certain time (e.g., 2 seconds)
+    setTimeout(() => {
+        gifElement.style.display = "none"; // Hide the GIF after 2 seconds
+    }, 2000);
+});
+
+
+// When the DOM content has loaded, set up the Game Over handler.
+document.addEventListener("DOMContentLoaded", function() {
+  const playerName = localStorage.getItem("playerName");
+  // Read the wins value from local storage now 
+  const storedWins = localStorage.getItem("wins") ? parseInt(localStorage.getItem("wins")) : 0;
+
+  console.log(`Player name retrieved: ${playerName}`);
+  console.log(`Wins retrieved on load: ${storedWins}`);
+
+  // Game Over button click event
+  document.getElementById("gameOverButton").addEventListener("click", function() {
+    console.log(`Game Over for: ${playerName}`);
+
+    // Read the final wins value from local storage at the moment of game over
+    const finalWins = localStorage.getItem("wins") ? parseInt(localStorage.getItem("wins")) : 0;
+    console.log(`Final wins for game: ${finalWins}`);
+
+    // Reference the player's score in Firebase 
+    const playerRef = ref(db, `scoreboard/${playerName}`);
+
+    // Retrieve the current score from Firebase and update it with the final wins
+    get(playerRef).then((snapshot) => {
+      let currentScore = snapshot.exists() ? snapshot.val().score : 0;
+      let newScore = currentScore + finalWins; // Add the final wins to the current score
+
+      return set(playerRef, { score: newScore }); // Update Firebase with the new score
+    }).then(() => {
+      
+      
+      // Reset local win count after updating the scoreboard
+      localStorage.setItem("wins", 0);
+    }).catch(error => {
+      console.error("Error updating score:", error);
+      alert("There was an error updating the score. Please try again.");
+    });
+  });
+});
+
+
+    </script>
 </body>
 </html>
