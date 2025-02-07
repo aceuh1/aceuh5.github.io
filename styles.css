@@ -51,3 +51,9 @@ font-size: larger;
   width: 300px; 
   z-index: 1000; /* Ensure it appears above everything */
 }
+.btn-small{
+ font-family: "Rubik Iso", serif;
+  font-weight: 400;
+  font-style: normal;
+ font-size: small;
+}
