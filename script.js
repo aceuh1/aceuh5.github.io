@@ -26,6 +26,7 @@ function addPlayer(playerName) {
 
     const playerRef = ref(db, "scoreboard/" + playerName);
 
+
     // Add player to Firebase and wait for the operation to complete
     get(playerRef).then((snapshot) => {
         if (!snapshot.exists()) {
@@ -82,7 +83,7 @@ function resetScoreboard() {
     if (confirm("Are you sure you want to remove all players? This cannot be undone.")) {
         const scoreboardRef = ref(db, "scoreboard"); // Correct database reference
 
-        // Use `remove()` instead of `set(null)`
+        // Use `remove()` 
         remove(scoreboardRef)
             .then(() => {
                 console.log("✅ All players removed from scoreboard.");
@@ -127,23 +128,6 @@ function checkAllPlayersReady() {
     });
 }
 
-// 🟢 Event Listener for "Ready" Button
-document.getElementById('readyButton')?.addEventListener('click', function () {
-    const playerName = prompt("Enter your name to mark as ready:"); // Get player's name
-    if (playerName) {
-        markPlayerReady(playerName);
-    } else {
-        alert("Please enter a valid name.");
-    }
-});
 
-// Ensure DOM is fully loaded before adding event listeners
-document.addEventListener("DOMContentLoaded", function () {
-    const resetButton = document.getElementById("resetButton");
-    if (resetButton) {
-        resetButton.addEventListener("click", resetScoreboard);
-        console.log("✅ Reset button event listener added.");
-    } else {
-        console.error("❌ Reset button not found in the DOM!");
-    }
-});
+
+
