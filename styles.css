@@ -1,3 +1,9 @@
+.homescreen{
+  background-color:black;
+  border-radius: 15px;
+  text-decoration: none;
+}
+
 body h2 {
   font-family: "Pixelify Sans", sans-serif;
   font-optical-sizing: auto;
@@ -86,7 +92,7 @@ font-size: larger;
 .btn-danger{
   font-family: "Rubik Iso", serif;
   font-weight: 400;
-
+  display: none;
 }
 #example{
   padding: 10px;
